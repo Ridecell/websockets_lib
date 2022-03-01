@@ -19,23 +19,23 @@ long_description = re.sub(
     flags=re.DOTALL | re.MULTILINE,
 )
 
-exec((root_dir / 'src' / 'websockets' / 'version.py').read_text(encoding='utf-8'))
+exec((root_dir / 'src' / 'websockets_lib' / 'version.py').read_text(encoding='utf-8'))
 
 if sys.version_info[:3] < (3, 6, 1):
     raise Exception("websockets requires Python >= 3.6.1.")
 
-packages = ['websockets', 'websockets/legacy', 'websockets/extensions']
+packages = ['websockets_lib', 'websockets_lib/legacy', 'websockets_lib/extensions']
 
 ext_modules = [
     setuptools.Extension(
-        'websockets.speedups',
-        sources=['src/websockets/speedups.c'],
+        'websockets_lib.speedups',
+        sources=['src/websockets_lib/speedups.c'],
         optional=not (root_dir / '.cibuildwheel').exists(),
     )
 ]
 
 setuptools.setup(
-    name='websockets',
+    name='websockets_lib',
     version=version,
     description=description,
     long_description=long_description,
@@ -57,7 +57,7 @@ setuptools.setup(
         'Programming Language :: Python :: 3.9',
     ],
     package_dir = {'': 'src'},
-    package_data = {'websockets': ['py.typed']},
+    package_data = {'websockets_lib': ['py.typed']},
     packages=packages,
     ext_modules=ext_modules,
     include_package_data=True,
